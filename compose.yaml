@@ -1,0 +1,19 @@
+services:
+  gigpilot:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      APP_PASSWORD: ${APP_PASSWORD:?Set APP_PASSWORD in .env}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2}
+    volumes:
+      - gigpilot-data:/app/data
+  ollama:
+    image: ollama/ollama:0.12.6
+    volumes:
+      - ollama-data:/root/.ollama
+volumes:
+  gigpilot-data:
+  ollama-data:
